@@ -3,7 +3,15 @@
 - hosts: 84.39.48.14
 #This is my task section
   tasks:
-    - name: NTP installation
-      yum: name=ntp state=present
-    - name: NTP service
+    - name: NTP OS Package installation
+      package: name=ntp state=present
+    - name: NTP file configuration
+      copy: src=/root/DevOpsTraning/AnsibleScripts/ntp.conf dest=/etc/ntp.conf
+      when: ansible_distribution=='CentOS'
+      notify:
+       - restart ntp
+    - name: To start NTP services
       service: name=ntpd state=started enabled=yes
+  handlers:
+    - name: restart ntp
+      service: name=ntpd state=restarted
