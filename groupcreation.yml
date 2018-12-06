@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: Group Creation
+      group: 
+        name: vishwak
+        gid: 5555
+    - name: Another Group Creation
+      group: name=vishwavk gid=5656
